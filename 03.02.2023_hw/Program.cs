@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MatrixClass;
 
 namespace _03._02._2023_hw
 {
     internal class Program
     {
-        static void PrintMatrix(int[,] C)
+        static void PrintMatrix(Matrix C)
         {
-            for (int i = 0; i < C.GetLength(0); i++)
+            for (int i = 0; i < C.Rows; i++)
             {
-                for (int j = 0; j < C.GetLength(1); j++)
+                for (int j = 0; j < C.Columns; j++)
                 {
                     Console.Write($"{C[i, j]} ");
                 }
@@ -126,19 +127,17 @@ namespace _03._02._2023_hw
                 int rowsA = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Columns number:\t");
                 int colA = Convert.ToInt32(Console.ReadLine());
-                int[,] A = new int[rowsA, colA];
+                Matrix A = new Matrix(rowsA,colA);
                 Console.WriteLine("Enter values for matrix A");
-                for (int i = 0; i < A.GetLength(0); i++)
+                for (int i = 0; i < A._Matrix.GetLength(0); i++)
                 {
-                    for (int j = 0; j < A.GetLength(1); j++)
+                    for (int j = 0; j < A._Matrix.GetLength(1); j++)
                     {
                         A[i, j] = Convert.ToInt32(Console.ReadLine());
                     }
                 }
-                int rowsC = rowsA, colC = colA;
                 Console.WriteLine("Operations:\n1.Multiply by number\n2.Add(A+B)\n3.Multiply by matrix(A*B)\nEnter 1/2/3");
                 int choice = Convert.ToInt32(Console.ReadLine());
-                int[,] C;
                 switch (choice)
                 {
                     default:
@@ -146,17 +145,17 @@ namespace _03._02._2023_hw
                         break;
                     case 1:
                         {
-                            Console.WriteLine("Enter number");
-                            int num = Convert.ToInt32(Console.ReadLine());
-                            C = new int[rowsC, colC];
-                            for (int i = 0; i < C.GetLength(0); i++)
-                            {
-                                for (int j = 0; j < C.GetLength(1); j++)
-                                {
-                                    C[i, j] = A[i, j] + num;
-                                }
-                            }
-                            PrintMatrix(C);
+                            //Console.WriteLine("Enter number");
+                            //int num = Convert.ToInt32(Console.ReadLine());
+                            //C = new int[rowsC, colC];
+                            //for (int i = 0; i < C.GetLength(0); i++)
+                            //{
+                            //    for (int j = 0; j < C.GetLength(1); j++)
+                            //    {
+                            //        C[i, j] = A[i, j] + num;
+                            //    }
+                            //}
+                            //PrintMatrix(C);
                             break;
                         }
                     case 2:
@@ -165,59 +164,39 @@ namespace _03._02._2023_hw
                             int rowsB = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Columns number:\t");
                             int colB = Convert.ToInt32(Console.ReadLine());
-                            int[,] B = new int[rowsB, colB];
+                            Matrix B = new Matrix(rowsB,colB);
                             Console.WriteLine("Enter values for matrix B");
-                            for (int i = 0; i < B.GetLength(0); i++)
+                            for (int i = 0; i < B._Matrix.GetLength(0); i++)
                             {
-                                for (int j = 0; j < B.GetLength(1); j++)
+                                for (int j = 0; j < B._Matrix.GetLength(1); j++)
                                 {
                                     B[i, j] = Convert.ToInt32(Console.ReadLine());
                                 }
                             }
-                            if (rowsA != rowsB || colA != colB)
-                            {
-                                Console.WriteLine("Numbers of rows and columns of A and B should be equal\nError");
-                                break;
-                            }
-                            C = new int[rowsA, colA];
-                            for (int i = 0; i < C.GetLength(0); i++)
-                            {
-                                for (int j = 0; j < C.GetLength(1); j++)
-                                {
-                                    C[i, j] = A[i, j] + B[i, j];
-                                }
-                            }
+                            Matrix C = A + B;
                             PrintMatrix(C);
                             break;
                         }
                     case 3:
                         {
+                            Matrix B = new Matrix();
                             Console.WriteLine("Matrix B\nRows number:\t");
-                            int rowsB = Convert.ToInt32(Console.ReadLine());
+                            B.Rows = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Columns number:\t");
-                            int colB = Convert.ToInt32(Console.ReadLine());
-                            int[,] B = new int[rowsB, colB];
+                            B.Columns = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter values for matrix B");
-                            for (int i = 0; i < B.GetLength(0); i++)
+                            for (int i = 0; i < B.Rows; i++)
                             {
-                                for (int j = 0; j < B.GetLength(1); j++)
+                                for (int j = 0; j < B.Columns; j++)
                                 {
                                     B[i, j] = Convert.ToInt32(Console.ReadLine());
                                 }
                             }
-                            colC = colB;
-                            C = new int[rowsC, colC];
-                            for (int i = 0; i < C.GetLength(0); i++)
-                            {
-                                for (int j = 0; j < C.GetLength(1); j++)
-                                {
-                                    C[i, j] = 0;
-                                    for (int k = 0; k < rowsB; k++)
-                                    {
-                                        C[i, j] += A[i, k] * B[k, j];
-                                    }
-                                }
-                            }
+
+
+
+                           Matrix  C = new Matrix();
+                   
                             PrintMatrix(C);
                             break;
                         }
